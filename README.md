@@ -5,10 +5,10 @@ Olá! Sou um entusiasta da tecnologia e um programador em constante exploração
 🐍 Python
 Onde a lógica encontra a versatilidade. Os meus projetos em Python focam-se em:
 
-  **Desenvolvimento de Jogos:** Exploração de bibliotecas como Pygame para criar mecânicas e lógica de jogo.
-  **Automação:** Criação de scripts para otimizar tarefas repetitivas e ganhar eficiência.
-  **Controlo e Gestão de Sistema:** Scripts para manipulação de ficheiros, monitorização e gestão interna do sistema operativo.
-  **Objetivo:** Dominar a sintaxe clara do Python para resolver problemas complexos de forma elegante.
+**Desenvolvimento de Jogos:** Exploração de bibliotecas como Pygame para criar mecânicas e lógica de jogo.
+**Automação:** Criação de scripts para otimizar tarefas repetitivas e ganhar eficiência.
+**Controlo e Gestão de Sistema:** Scripts para manipulação de ficheiros, monitorização e gestão interna do sistema operativo.
+**Objetivo:** Dominar a sintaxe clara do Python para resolver problemas complexos de forma elegante.
 
 
 🧠 A minha Filosofia
@@ -26,6 +26,6 @@ Seja na lógica, no design ou na jogabilidade, procuro unir a paixão de jogar c
 
 🛠 No que estou a trabalhar agora?
 
- 🔭 Atualmente a explorar: [Python]
- 🌱 A aprender: [Logica de Programação, Interfaces Graficas]
- 🎯 Objetivo: Criar experiências interativas e sistemas sólidos para jogos.
+🔭 Atualmente a explorar: [Python]
+🌱 A aprender: [Logica de Programação, Interfaces Graficas]
+🎯 Objetivo: Criar experiências interativas e sistemas sólidos para jogos.
