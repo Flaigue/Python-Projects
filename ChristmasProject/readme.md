@@ -34,5 +34,12 @@ Como Executar
 2. Clona este repositório: 
    ```bash
    git clone https://github.com/Flaigue/Python-Projects
-3. Navega até a pasta do projeto: cd Python-Projects/ChristmasProject
-4. Executa o script: python3 ChirstmasTree.py
+   ```
+3. Navega até a pasta do projeto:
+   ```bash
+   cd Python-Projects/ChristmasProject
+   ```
+5. Executa o script:
+   ```bash
+   python3 ChirstmasTree.py
+   ```
