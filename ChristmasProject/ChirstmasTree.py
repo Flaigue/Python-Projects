@@ -1,36 +1,47 @@
 import os
 import datetime
 
+# Get current date info
 current_date = datetime.date.today()
 current_day = current_date.day
 current_month = current_date.month
 
-altura = int(input("=> "))
-tronco = " " * (altura - 2)
-os.system("clear")
+# User input for tree height
+height = int(input("Enter tree height => "))
+trunk_spacing = " " * (height - 2)
+os.system("cls" if os.name == "nt" else "clear")
 
-cores = {
+# Color dictionary using ANSI RGB escape sequences
+colors = {
     "reset": "\033[0m",
-    "amarelo": "\033[38;2;255;255;0m",
-    "castanho": "\033[38;2;160;105;40m",
-    "cinzento": "\033[48;2;75;75;75m",
-    "verde": "\033[38;2;0;255;0m"
+    "yellow": "\033[38;2;255;255;0m",
+    "brown": "\033[38;2;160;105;40m",
+    "grey": "\033[48;2;75;75;75m",
+    "green": "\033[38;2;0;255;0m"
 }
 
-for andar in range (1, altura + 1):
-    espacos = " " * (altura - andar)
-      
-    if andar == 1:
-        cor_escolhida = cores["amarelo"]
+# Drawing the tree leaves (canopy)
+for level in range(1, height + 1):
+    spaces = " " * (height - level)
+    
+    # The first level (top) is the star (yellow), others are green
+    if level == 1:
+        chosen_color = colors["yellow"]
     else:
-        cor_escolhida = cores["verde"]
-    print(f"{espacos}{cor_escolhida}{'*' * (2 * andar - 1)}{cores['reset']}")
+        chosen_color = colors["green"]
+    
+    print(f"{spaces}{chosen_color}{'*' * (2 * level - 1)}{colors['reset']}")
 
-for i in range(2):
-    print(f"{tronco}{cores['castanho']}{'|'*3}{cores['reset']}")
-print(f"{' '*(altura - 3)}{cores['cinzento']}{' '*5}{cores['reset']}")
+# Drawing the trunk
+for _ in range(2):
+    print(f"{trunk_spacing}{colors['brown']}{'|'*3}{colors['reset']}")
+
+# Drawing the base (soil/support)
+print(f"{' '*(height - 3)}{colors['grey']}{' '*5}{colors['reset']}")
 
 print("")
+
+# Seasonal messaging logic
 if current_month == 12:
     if current_day == 24:
         print("Congratulations! It's Christmas Eve, and tomorrow will be an amazing day.")
@@ -41,5 +52,6 @@ if current_month == 12:
 else:
     print("Unfortunately, you're not in the festive month of December, but don't worry — it will be here before you know it.")
 
-sair = str(input(""))
+# Keep terminal open
+exit_prompt = str(input("\nPress Enter to exit..."))
 exit()
