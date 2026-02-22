@@ -1,74 +1,84 @@
+# Aim Flow: Precision Training Tool
 
-Aim Flow - Precision Training Tool
-
-Aim Flow é um mini-game de treinamento de precisão (aim training) desenvolvido em Python3. O projeto foca na manipulação de interfaces gráficas (GUI) e no gerenciamento de estados de jogo em tempo real, desafiando o usuário a clicar em alvos gerados dinamicamente sob pressão de tempo.
-
-
-Arquitetura e Lógica de Desenvolvimento
-
-O projeto foi construído utilizando uma abordagem funcional com foco em Event-Driven Programming (Programação Orientada a Eventos). Abaixo, os principais pilares técnicos:
-
-1. Gerenciamento de Estados (State Management)
-
-O software alterna entre três estados principais:
-
-  Idle (Aguardando): O sistema permanece em espera até o primeiro clique, evitando o desperdício de recursos e tempo do usuário.
-  Active (Ativo): O loop de jogo é iniciado, disparando o cronômetro e a lógica de pontuação.
-  GameOver (Finalizado): Ocorre a desativação de inputs (`state="disabled"`) e a limpeza da interface para exibição de resultados e opções de reset ou sair.
-
-2. Cronometragem Assíncrona
-
-Diferente de abordagens básicas que utilizam `time.sleep()` (o que causaria o congelamento da interface), este projeto utiliza o método `.after()` do Tkinter. Isso permite que o cronômetro rode de forma não-bloqueante, mantendo a interface fluida e responsiva.
-
-3. Geometria Dinâmica e Responsividade
-
-A lógica de posicionamento do alvo calcula em tempo real as dimensões da janela (`winfo_width` / `winfo_height`). Isso garante que o botão nunca seja gerado fora da área visível, independentemente de o usuário estar com a janela maximizada ou redimensionada.
+**Aim Flow** is a precision-training mini-game developed in Python 3. The project focuses on Graphical User Interface (GUI) manipulation and real-time game state management, challenging users to click dynamically generated targets under time pressure.
 
 ---
 
-Funcionalidades Principais
+## Architecture & Development Logic
 
-  Start On Click: O cronômetro e score só inicia após a primeira interação do usuário.
-  Score System: Contador de precisão em tempo real.
-  Boundary Detection: Algoritmo simples de detecção de bordas para evitar clipping de UI.
-  Game Reset: Função dedicada para reverter todas as variáveis globais e estados da interface ao padrão original, sem necessidade de reinicializar o processo.
+The project was built using a functional approach with a focus on **Event-Driven Programming**. Below are the core technical pillars:
+
+### 1. State Management
+
+The software alternates between three main states:
+
+* **Idle:** The system remains on standby until the first click, preserving resources and user time.
+* **Active:** The game loop initiates, triggering the countdown timer and scoring logic.
+* **GameOver:** Inputs are deactivated (`state="disabled"`) and the interface is cleared to display results and reset/exit options.
+
+### 2. Non-blocking Timer Logic
+
+Unlike basic approaches that use `time.sleep()` (which would freeze the GUI), this project utilizes Tkinter's `.after()` method. This allows the timer to run asynchronously, keeping the interface fluid and responsive.
+
+### 3. Dynamic Geometry & Responsiveness
+
+Target positioning logic calculates window dimensions (`winfo_width` / `winfo_height`) in real-time. This ensures the button is never generated outside the visible area, regardless of window resizing or maximization.
 
 ---
 
-Como Executar o Projeto
+## Key Features
 
-1. Verifique as dependências:
-O projeto utiliza apenas bibliotecas nativas do Python (Tkinter, Random, OS).
+* **Start On Click:** Global variables and timers only trigger after the user's first interaction.
+* **Real-time Score System:** Instant precision tracking.
+* **Boundary Detection:** A robust algorithm to prevent UI clipping and ensure targets stay within bounds.
+* **Soft Reset:** A dedicated function to revert all global variables and UI states to default without restarting the process.
 
-2. Clone o repositório:
+---
+
+## How to Run
+
+1. **Check Dependencies:**
+The project uses only native Python libraries (**Tkinter**, **Random**, **OS**).
+
+2. **Clone the repository:**
 ```bash
-git clone https://github.com/seu-usuario/flow-aim.git
+git clone https://github.com/Flaigue/Python-Projects.git
 ```
 
-3. Entrar na pasta AimTraining:
+3. **Navigate to the AimTraining folder:**
 ```bash
 cd AimTraining
 ```
-4. Executar:
+
+4. **Run the application:**
 ```bash
-python AimFlow.py
+python3 AimFlow.py
 ```
----
 
-Nota: Certifique-se de ter o arquivo `Python.png` no diretório configurado para que o ícone da aplicação seja carregado corretamente.
-
----
-
-Próximos Passos (Roadmap)
-
-Para futuras iterações, pretendo implementar:
-
-[ ] Persistência de Dados: Salvar High Scores em arquivos JSON ou SQLite.
-[ ] Níveis de Dificuldade: Redução progressiva do tamanho do botão conforme o score aumenta.
-[ ] Refatoração para POO: Migrar a lógica para classes (Programação Orientada a Objetos) para maior escalabilidade.
+> **Note:** Ensure the `Python.png` file is in the configured directory for the application icon to load correctly.
 
 ---
 
-Autor
-Leandro Reis - Linkedin - https://www.linkedin.com/in/leandro/alves/nunes
+## Roadmap (Future Iterations)
 
+* [ ] **Data Persistence:** Save High Scores using JSON or SQLite.
+* [ ] **Difficulty Levels:** Progressive reduction of target size as the score increases.
+* [ ] **OOP Refactoring:** Migrate logic to Classes (Object-Oriented Programming) for better scalability.
+
+---
+
+## About the Author
+
+Developed by **Leandro dos Reis**. Passionate about IT and gaming, focused on transforming logic into interactive experiences.
+
+**Connect with me:**
+[LinkedIn Profile](https://www.linkedin.com/in/leandro-alves-nunes)
+
+---
+
+## License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+* **Attribution:** You must give appropriate credit to Leandro dos Reis.
+* **Non-Commercial:** You may not use this material for commercial purposes without explicit permission.
