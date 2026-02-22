@@ -1,45 +1,83 @@
-Árvore de Natal Dinâmica em Python
+# Dynamic Christmas Tree: Terminal Art & Logic
 
-Este é um projeto desenvolvido em Python que gera uma árvore de Natal personalizada no terminal. O script vai além do visual básico, utilizando lógica de datas e cores ANSI reais (RGB) para criar uma experiência interativa.
+**Dynamic Christmas Tree** is a Python script that generates a customizable, colored Christmas tree directly in the terminal. More than just a visual exercise, it integrates real-time date checking and advanced terminal styling to create a seasonal interactive experience.
 
-Funcionalidades
+---
 
-Altura Personalizável: O utilizador define o tamanho da árvore através de um input.
-Cores RGB no Terminal: Uso de dicionários e sequências de escape ANSI para renderizar cores vivas (Amarelo para a estrela, Verde para as folhas, Castanho para o tronco e Cinzento para a base).
-Lógica de Calendário: O script utiliza a biblioteca `datetime` para verificar a data atual e exibir mensagens personalizadas:
-    Véspera de Natal (24/12).
-    Dia de Natal (25/12).
-    Mês de Dezembro.
-    Fora da época festiva.
-Interface Limpa: Uso de `os.system("clear")` para focar a atenção apenas no desenho gerado.
+## Architecture & Development Logic
 
-Tecnologias Utilizadas
+The project moves beyond basic loops by implementing professional string manipulation and system integration:
 
-Python 3
-Biblioteca `os`: Para manipulação do terminal.
-Biblioteca `datetime`: Para gestão de lógica temporal.
+### 1. RGB Terminal Rendering
 
-Aprendizados Técnicos
+Instead of standard terminal colors, this project uses **ANSI RGB escape sequences** (`\033[38;2;R;G;Bm`). By storing these in a dictionary, the code remains clean and allows for high-fidelity colors:
 
-Neste projeto, consolidei conceitos fundamentais de programação:
+* **Star:** Yellow RGB.
+* **Leaves:** Vibrant Green RGB.
+* **Trunk:** Earthy Brown RGB.
+* **Base:** Neutral Grey Background.
 
-F-Strings: Para interpolação de variáveis e formatação de strings complexas de forma legível.
-Dicionários: Organização de códigos de cores (ANSI RGB) para facilitar a manutenção e evitar repetição de código.
-Matemática de Alinhamento: Lógica para calcular espaços e a quantidade de caracteres por linha, garantindo a forma triangular perfeita independente da altura.
-Validação de Input: Implementação de um fecho de programa controlado pelo utilizador, evitando que o terminal feche abruptamente.
+### 2. Time-Aware Logic
 
-Como Executar
+Using the `datetime` module, the application is "aware" of the current date. It implements a conditional system to deliver context-specific messages based on the calendar:
 
-1. Certifica-te de que tens o Python instalado no teu sistema (testado em Linux Mint).
-2. Clona este repositório: 
-   ```bash
-   git clone https://github.com/Flaigue/Python-Projects
-   ```
-3. Navega até a pasta do projeto:
-   ```bash
-   cd Python-Projects/ChristmasProject
-   ```
-5. Executa o script:
-   ```bash
-   python3 ChirstmasTree.py
-   ```
+* **Christmas Eve (Dec 24th)**
+* **Christmas Day (Dec 25th)**
+* **December Season**
+* **Off-Season messages**
+
+### 3. Geometric Alignment Math
+
+The tree's triangular shape is calculated dynamically based on user input. The logic ensures perfect symmetry by calculating spaces and character counts for each level:
+
+* **Spaces:** `altura - andar`
+* **Characters:** `2 * andar - 1`
+
+---
+
+## Key Features
+
+* **Customizable Height:** User-defined input to scale the tree to any size.
+* **Clean Interface:** Automatic terminal clearing using `os.system` for a focused visual output.
+* **Dynamic Feedback:** Contextual messages that change based on the system's date.
+* **Graceful Exit:** Controlled program closure to prevent the terminal from snapping shut after execution.
+
+---
+
+## How to Run
+
+1. **Check Requirements:**
+Works on any terminal that supports ANSI colors (tested on **Linux Mint/XFCE**).
+
+3. **Clone the repository:**
+```bash
+git clone https://github.com/Flaigue/Python-Projects.git
+```
+
+3. **Navigate to the folder:**
+```bash
+cd ChristmasProject
+```
+
+4. **Run the script:**
+```bash
+python3 ChristmasTree.py
+```
+
+---
+
+## About the Author
+
+Developed by **Leandro dos Reis**. Focused on exploring the intersection between hardware-software interaction and creative coding.
+
+**Connect with me:**
+[LinkedIn Profile](https://www.linkedin.com/in/leandro-alves-nunes)
+
+---
+
+## License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+* **Attribution:** You must give appropriate credit to Leandro dos Reis.
+* **Non-Commercial:** You may not use this material for commercial purposes without explicit permission.
