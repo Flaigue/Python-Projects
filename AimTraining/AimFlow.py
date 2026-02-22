@@ -2,114 +2,118 @@ from tkinter import *
 import random
 import os
 
-# Limpa o terminal ao iniciar para uma execução mais limpa
+# Clears the terminal at startup for a cleaner execution
 os.system("cls" if os.name == "nt" else "clear")
 
-# --- CONFIGURAÇÕES E VARIÁVEIS GLOBAIS ---
-counter = 0
-time = 10
+# --- SETTINGS AND GLOBAL VARIABLES ---
+score_counter = 0
+time_remaining = 10
 game_started = False
 
-# --- LÓGICA DAS FUNÇÕES ---
+# --- FUNCTION LOGIC ---
 
-def action(event=None):
-    """Controla o posicionamento aleatório do botão alvo."""
+def reposition_target(event=None):
+    """Handles the random positioning of the target button."""
     if event is None or event.widget == window:
-        with_window = window.winfo_width()
-        height_window = window.winfo_height()
+        window_width = window.winfo_width()
+        window_height = window.winfo_height()
 
-        # Garante que o botão não seja gerado fora de janelas muito pequenas
-        if with_window > 150 and height_window > 150:
-            new_x = random.randint(50, with_window - 50)
-            new_y = random.randint(50, height_window - 50)
-            main_button.place(x=new_x, y=new_y)
+        # Ensures the button isn't generated outside if the window is too small
+        if window_width > 150 and window_height > 150:
+            new_x = random.randint(50, window_width - 50)
+            new_y = random.randint(50, window_height - 50)
+            target_button.place(x=new_x, y=new_y)
 
-def clicking():
-    """Registra o clique, inicia o jogo e atualiza o score."""
-    global counter, game_started
-    if game_started is not True:
+def handle_click():
+    """Registers the click, starts the game, and updates the score."""
+    global score_counter, game_started
+    if not game_started:
         game_started = True
         update_timer()
     
-    counter += 1
-    score.config(text=f"Score: {counter}")
-    action()
+    score_counter += 1
+    score_label.config(text=f"Score: {score_counter}")
+    reposition_target()
 
 def update_timer():
-    """Gerencia a contagem regressiva e o estado de fim de jogo."""
-    global time
-    if time > 0:
-        time -= 1
-        timer_window.config(text=f"Time: {time}sec")
+    """Manages the countdown and the game-over state."""
+    global time_remaining
+    if time_remaining > 0:
+        time_remaining -= 1
+        timer_label.config(text=f"Time: {time_remaining}sec")
         window.after(1000, update_timer)
     else:
-        # Finaliza a interação e exibe o menu de Game Over
-        main_button.config(state="disabled")
-        main_button.place_forget()
-        main_text.config(text="Game Over !", fg="#FF0000")
+        # Finalizes interactions and displays the Game Over menu
+        target_button.config(state="disabled")
+        target_button.place_forget()
+        instruction_text.config(text="Game Over!", fg="#FF0000")
         restart_button.place(relx=0.5, rely=0.60, anchor="center")
-        leave_button.place(relx=0.5, rely=0.75, anchor="center")
+        exit_button.place(relx=0.5, rely=0.75, anchor="center")
 
 def reset_game():
-    """Restaura as variáveis e a interface para o estado inicial."""
-    global counter, time, game_started
-    counter = 0
-    time = 10
+    """Restores variables and UI to their initial state."""
+    global score_counter, time_remaining, game_started
+    score_counter = 0
+    time_remaining = 10
     game_started = False
 
-    score.config(text="Score: 0")
-    timer_window.config(text="Time: 10sec")
-    main_text.config(text="Train you accuracy here", fg="#ffffff")
+    score_label.config(text="Score: 0")
+    timer_label.config(text="Time: 10sec")
+    instruction_text.config(text="Train your accuracy here", fg="#ffffff")
 
-    main_button.config(state="normal")
-    main_button.place(relx=0.5, rely=0.5, anchor="center")
+    target_button.config(state="normal")
+    target_button.place(relx=0.5, rely=0.5, anchor="center")
 
     restart_button.place_forget()
-    leave_button.place_forget()
+    exit_button.place_forget()
 
-def leave():
-    """Fecha a aplicação."""
+def exit_application():
+    """Closes the application."""
     window.destroy()
 
-# --- INTERFACE GRÁFICA (GUI) ---
+# --- GRAPHICAL USER INTERFACE (GUI) ---
 
 window = Tk()
 window.state("zoomed")
 window.title("Flow Aim")
 window.config(background="Black")
 
-# --- LÓGICA DINÂMICA PARA O ÍCONE ---
+# --- DYNAMIC ICON LOGIC ---
 try:
-    pasta_projeto = os.path.dirname(__file__)
-    caminho_icone = os.path.join(pasta_projeto, "Python.png")
-    app_icon = PhotoImage(file=caminho_icone)
+    project_dir = os.path.dirname(__file__)
+    icon_path = os.path.join(project_dir, "Python.png")
+    app_icon = PhotoImage(file=icon_path)
     window.iconphoto(True, app_icon)
 except Exception as error:
-    # Se a imagem falhar, o programa continua mas avisa o erro no terminal
-    print(f"Erro em carregar o ícone: {error}")
+    print(f"Error loading icon: {error}")
 
-# Elementos de Texto e Alvos
-main_text = Label(window, text="Train you accuracy here", font=("Fixedsys", "25"), background="black", fg="white")
-main_text.pack(pady=20)
+# Font settings (Added fallbacks for better cross-platform support)
+main_font = ("Fixedsys", 25, "bold")
+ui_font = ("MS Serif", 15)
+button_font = ("Courier", 25, "bold") # Changed to Courier for better compatibility
 
-main_button = Button(window, background="white", relief="flat", highlightthickness=0, padx=15, pady=10, command=clicking)
-main_button.place(relx=0.5, rely=0.5, anchor="center")
+# Text Elements and Targets
+instruction_text = Label(window, text="Train your accuracy here", font=main_font, background="black", fg="white")
+instruction_text.pack(pady=20)
 
-# Painel de Status (Score e Timer)
-score = Label(window, text="Score: 0", font=("MS Serif","15"), fg="#ffffff", bg="#000000")
-score.place(relx=0.99, rely=0.01, anchor="ne")
+target_button = Button(window, background="white", relief="flat", highlightthickness=0, padx=15, pady=10, command=handle_click)
+target_button.place(relx=0.5, rely=0.5, anchor="center")
 
-timer_window = Label(window, text="Time: 10sec", font=("MS Serif","15"), fg="#ffffff", bg="#000000")
-timer_window.place(relx=0.99, rely=0.05, anchor="ne")
+# Status Panel (Score and Timer)
+score_label = Label(window, text="Score: 0", font=ui_font, fg="#ffffff", bg="#000000")
+score_label.place(relx=0.99, rely=0.01, anchor="ne")
 
-# Botões de Menu (Reiniciar e Sair)
-restart_button = Button(window, text="Restart", font=("8514oem", "25"), padx=5, pady=3, bg="#FFFFFF", fg="#000000", command=reset_game)
+timer_label = Label(window, text="Time: 10sec", font=ui_font, fg="#ffffff", bg="#000000")
+timer_label.place(relx=0.99, rely=0.05, anchor="ne")
 
-leave_button = Button(window, text="Leave", font=("8514oem", "25"), padx=3, pady=3, bg="#ffffff", fg="#000000", command=leave)
+# Menu Buttons (Restart and Exit)
+restart_button = Button(window, text="Restart", font=button_font, padx=5, pady=3, bg="#FFFFFF", fg="#000000", command=reset_game)
 
-# --- EVENTOS E EXECUÇÃO ---
+exit_button = Button(window, text="Leave", font=button_font, padx=3, pady=3, bg="#ffffff", fg="#000000", command=exit_application)
 
-# Detecta mudanças na janela para ajustar o botão alvo
-window.bind("<Configure>", action)
+# --- EVENTS AND EXECUTION ---
+
+# Detects window changes to adjust target positioning
+window.bind("<Configure>", reposition_target)
 
 window.mainloop()
