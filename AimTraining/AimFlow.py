@@ -74,7 +74,13 @@ def exit_application():
 # --- GRAPHICAL USER INTERFACE (GUI) ---
 
 window = Tk()
-window.state("zoomed")
+
+# Compatibility fix for Linux (Mint/Ubuntu) and Windows
+try:
+    window.state("zoomed")  # Works on Windows
+except:
+    window.attributes('-zoomed', True)  # Works on Linux
+    
 window.title("Flow Aim")
 window.config(background="Black")
 
