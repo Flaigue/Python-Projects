@@ -83,7 +83,18 @@ python3 BombGame.py
 
 ## About the Author
 
-Developed by **Leandro Reis**. Passionate about IT and gaming, focused on learning how to transform pure logic into interactive experiences. Currently exploring the depths of Python on Linux Mint.
+Developed by **Leandro dos Reis**. Passionate about IT and gaming, focused on learning how to transform pure logic into interactive experiences. Currently exploring the depths of Python on Linux Mint.
 
 **Connect with me:**
 [LinkedIn Profile](https://www.linkedin.com/in/leandro-alves-nunes)
+
+---
+
+## License
+
+This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+**Key Terms:**
+ **Attribution:** You must give appropriate credit to **Leandro dos Reis**, providing a link to this repository and indicating if any changes were made.
+ **Non-Commercial:** You may not use this code or its derivatives for commercial purposes without explicit permission.
+ **Educational Use:** Feel free to download, study, and modify the code for learning and personal growth.
