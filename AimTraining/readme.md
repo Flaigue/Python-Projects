@@ -80,5 +80,7 @@ Developed by **Leandro dos Reis**. Passionate about IT and gaming, focused on tr
 
 This project is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
-* **Attribution:** You must give appropriate credit to Leandro dos Reis.
-* **Non-Commercial:** You may not use this material for commercial purposes without explicit permission.
+**Key Terms:**
+ **Attribution:** You must give appropriate credit to **Leandro dos Reis**, providing a link to this repository and indicating if any changes were made.
+ **Non-Commercial:** You may not use this code or its derivatives for commercial purposes without explicit permission.
+ **Educational Use:** Feel free to download, study, and modify the code for learning and personal growth.
