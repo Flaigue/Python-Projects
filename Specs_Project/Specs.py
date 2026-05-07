@@ -1,116 +1,115 @@
-import platform          # Biblioteca para obter informações do sistema (OS, CPU, arquitetura, etc.)
-import os                # Biblioteca para interagir com o sistema operativo (variáveis, comandos, etc.)
-import subprocess        # Biblioteca para executar comandos do terminal e capturar a saída
+import platform          # Library to obtain system information (OS, CPU, architecture, etc.)
+import os                # Library to interact with the operating system (variables, commands, etc.)
+import subprocess        # Library to execute terminal commands and capture output
 import psutil
 
-os.system("clear")       # Limpa o terminal (equivalente ao comando 'clear' no Linux)
+os.system("clear")       # Clears the terminal (equivalent to the 'clear' command in Linux)
 
-DE = os.environ.get("XDG_CURRENT_DESKTOP")  
-# Pega da variável de ambiente de qual é o Desktop Environment atual (XFCE, Cinnamon, KDE, etc.)
+# Gets the current Desktop Environment from environment variables (XFCE, Cinnamon, KDE, etc.)
+desktop_env = os.environ.get("XDG_CURRENT_DESKTOP")  
 
-with open("/etc/os-release", "r") as ficheiro:   # Abre o ficheiro que contém informações do sistema Linux
-    for line in ficheiro:                        # Lê linha por linha
-        if "PRETTY_NAME" in line:                # Quando encontrar a linha com o nome completo do sistema
-            system = line.replace('"', "")       # Remove aspas
-            system = system.replace("PRETTY_NAME=", "")  # Remove o prefixo e deixa só o nome do sistema
-        if "VERSION_CODENAME" in line:           # Quando encontrar o codename da versão
-            codename = line.replace("VERSION_CODENAME=", "")  # Remove o prefixo e deixa só o codename
+# Opens the file containing Linux system information
+with open("/etc/os-release", "r") as system_file:   
+    for line in system_file:                     # Read line by line
+        if "PRETTY_NAME" in line:                # Find the line with the full system name
+            system_name = line.replace('"', "")  # Remove quotes
+            system_name = system_name.replace("PRETTY_NAME=", "")  # Remove prefix to keep only the name
+        if "VERSION_CODENAME" in line:           # Find the version codename
+            codename = line.replace("VERSION_CODENAME=", "")  # Remove prefix to keep only the codename
 
 print("Generic OS Name:", platform.system(), platform.release())
-# Mostra o nome genérico do OS (Linux) e a versão do kernel
+# Displays generic OS name (Linux) and kernel version
 
-print(f"System: {system}", end="")  
-# Mostra o nome completo do sistema (ex: Linux Mint 21.3)
-# end="" evita quebrar a linha aqui
+print(f"System: {system_name}", end="")  
+# Displays full system name (e.g., Linux Mint 21.3)
+# end="" avoids an unnecessary newline here
 
-print(f"Desktop Environment: {DE}")  
-# Mostra o ambiente gráfico atual (XFCE, Cinnamon, etc.)
+print(f"Desktop Environment: {desktop_env}")  
+# Displays the current graphical environment (XFCE, Cinnamon, etc.)
 
 print(f"CodeName Version: {codename.capitalize()}")  
-# Mostra o codename da versão (ex: 'virginia'), com a primeira letra maiúscula
+# Displays version codename (e.g., 'virginia') with the first letter capitalized
 
-print("CPU Arquitecture:", platform.processor())  
-# Mostra a arquitetura da CPU (ex: x86_64 ou o nome do processador)
+print("CPU Architecture:", platform.processor())  
+# Displays CPU architecture (e.g., x86_64 or processor name)
 
-count = 0               # Variável usada para garantir que só apanhas a primeira ocorrência de cache size
-modelcpu = ""           # Variável não usada, mas deixada aqui (não faz mal)
+occurrence_count = 0     # Variable used to ensure only the first occurrence of cache size is captured
+cpu_model_placeholder = "" # Unused variable, left as a placeholder
 
-with open("/proc/cpuinfo", "r") as specs_cpu:   # Abre o ficheiro com informações detalhadas da CPU
-    for line in specs_cpu:                      # Lê linha por linha
+# Opens the file with detailed CPU information
+with open("/proc/cpuinfo", "r") as cpu_specs_file:   
+    for line in cpu_specs_file:                  # Read line by line
 
-        if "model name" in line:                # Quando encontrar a linha com o modelo da CPU
+        if "model name" in line:                 # Find the line with the CPU model
             part_model, part_freq = line.split("@")  
-            # Divide a linha em duas partes: antes do @ (modelo) e depois do @ (frequência)
+            # Split the line into two parts: before @ (model) and after @ (frequency)
 
             part_model = part_model.replace("model name", "").replace(":", "").replace("(R)", "").replace("CPU", "")
-            # Limpa texto inútil: remove 'model name:', remove '(R)', remove 'CPU'
+            # Clean up text: remove 'model name:', ':', '(R)', and 'CPU'
 
             part_model = part_model.strip().split()
-            # Remove espaços extras e divide em palavras separadas
+            # Remove extra spaces and split into separate words
 
             part_model = " ".join(part_model)
-            # Junta tudo de novo com um único espaço entre palavras (fica mais limpo)
+            # Rejoin with a single space between words for a cleaner output
 
-        if "cache size" in line:                # Quando encontrar a linha do cache
-            if count == 0:                      # Só apanha a primeira vez que aparece
-                cache_cpu = line                # Guarda a linha inteira
-                cache_cpu = cache_cpu.split(":")  # Divide em ['cache size', ' valor']
+        if "cache size" in line:                 # Find the cache size line
+            if occurrence_count == 0:            # Only capture the first occurrence
+                cpu_cache = line                 # Save the whole line
+                cpu_cache = cpu_cache.split(":") # Split into ['cache size', ' value']
             else:
                 pass
-            count += 1                          # Marca que já apanhaste uma vez
+            occurrence_count += 1                # Mark that the first occurrence was captured
 
-        count = 0                               # Reinicia o contador (faz com que apanhes sempre a primeira linha)
+        occurrence_count = 0                     # Reset counter
 
-        if "cpu cores" in line:                 # Quando encontrar a linha com o número de cores
-            if count == 0:                      # Só apanha a primeira ocorrência
-                cpu_cores = line                # Guarda a linha
-                cpu_cores = cpu_cores.split(":")  # Divide em ['cpu cores', ' valor']
+        if "cpu cores" in line:                  # Find the line with the number of cores
+            if occurrence_count == 0:            # Capture only the first occurrence
+                cpu_cores = line                 # Save the line
+                cpu_cores = cpu_cores.split(":") # Split into ['cpu cores', ' value']
             else:
                 pass
 
 print(f"Processor Model (CPU): {part_model}")  
-# Mostra o modelo da CPU já limpo
+# Displays cleaned CPU model
 
 print(f"CPU Frequency: {part_freq.strip()}")  
-# Mostra a frequência da CPU (parte depois do @)
+# Displays CPU frequency (part after the @)
 
-print(f"CPU Cache: {cache_cpu[-1].strip()}")  
-# Mostra o valor do cache (último elemento da lista)
+print(f"CPU Cache: {cpu_cache[-1].strip()}")  
+# Displays cache value (last element of the list)
 
 print(f"CPU Cores: {cpu_cores[-1].strip()}")  
-# Mostra o número de cores (último elemento da lista)
+# Displays number of cores (last element of the list)
 
 print("CPU usage (%):", psutil.cpu_percent(interval=1))
 
-gpu = subprocess.run("lspci | grep -i vga", shell=True, capture_output=True)
-# Executa o comando 'lspci' filtrado por 'vga' e captura a saída
+# Execute 'lspci' filtered by 'vga' and capture output
+gpu_info = subprocess.run("lspci | grep -i vga", shell=True, capture_output=True)
 
-gpu = gpu.stdout.decode("utf-8")
-# Converte os bytes capturados para string normal
+# Decode captured bytes to a standard string
+gpu_info = gpu_info.stdout.decode("utf-8")
 
-gpu = gpu.rsplit(":", 1)
-# Divide a string no último ':' → devolve lista com 2 partes
+# Split string at the last ':' -> returns a list with 2 parts
+gpu_info = gpu_info.rsplit(":", 1)
 
-gpu = gpu[1]
-# Fica só com a parte da direita (onde está o nome da GPU)
+# Keep the right part (where the GPU name is)
+gpu_name = gpu_info[1]
 
-gpu = gpu.split("(")[0]
-# Divide no '(' e apanha só a parte antes → remove '(rev 0e)' ou qualquer revisão
-# strip() remove espaços extras
+# Split at '(' and take the part before to remove revisions like '(rev 0e)'
+gpu_name = gpu_name.split("(")[0]
 
-gpu = gpu.replace("Graphics & Display", "").strip()
+# Clean specific strings and remove extra spaces
+gpu_name = gpu_name.replace("Graphics & Display", "").strip()
 
 print("")
-print(f"Grafics Card (GPU): {gpu}")
-# Mostra o nome final da GPU já limpo
+print(f"Graphics Card (GPU): {gpu_name}")
+# Displays final cleaned GPU name
 
 print("")
 ram = psutil.virtual_memory()
-print("Total Memory:",round(ram.total / 1e9, 2),"GB")
-print("Used Memory:", round(ram.used / 1e9, 2),"GB")
-print("Available Memory:",round(ram.available / 1e9, 2),"GB")
-print("Free Memory:", round(ram.free / 1e9, 2),"GB")
-print("RAM usage:", ram.percent,"%")
-
-#Colocar Specs CPU, GPU, RAM e Armazenamento como as specs principais dos PC
-#Specs do OS, CPU mais especificamente o modelo da CPU, arquitetura e Frequencia foi concluido
+print("Total Memory:", round(ram.total / 1e9, 2), "GB")
+print("Used Memory:", round(ram.used / 1e9, 2), "GB")
+print("Available Memory:", round(ram.available / 1e9, 2), "GB")
+print("Free Memory:", round(ram.free / 1e9, 2), "GB")
+print("RAM usage:", ram.percent, "%")
