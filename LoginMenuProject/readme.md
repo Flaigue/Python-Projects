@@ -63,7 +63,7 @@ cd Python-Projects
 
 3. **Run the application:**
 ```bash
-python3 AuthSystem.py
+python3 LoginMenu.py
 
 ```
 
